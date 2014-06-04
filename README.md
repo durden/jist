@@ -9,7 +9,7 @@ private [gists](https://gist.github.com).
 
 In order to be able to create new gists from the command-line, we need to use an API token. GitHub makes this very easy to do, so I will walk you through the steps.
 
-First log in to your github account and click the wrench/screwdriver icon to navigate to your account settings (if any GitHubbers happen to be reading, your icons are **awful**). In the account settings page, click the *Applications* tab on the left-hand navigation. Then select the *Generate new token* button:
+First log in to your github account and click the wrench/screwdriver icon to navigate to your account settings. In the account settings page, click the *Applications* tab on the left-hand navigation. Then select the *Generate new token* button:
 
 ![](http://media.charlesleifer.com/blog/photos/thumbnails/github-applications-page_800x800.png)
 
