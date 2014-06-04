@@ -41,10 +41,11 @@ def command(highlight=False):
 class Gist(object):
     user_agent = 'jist/0.1'
 
-    def __init__(self, username=None, key=None, quiet=False):
+    def __init__(self, username=None, key=None, quiet=False, separator='___'):
         self.username = username or self.read_config_value('user')
         self.key = key or self.read_config_value('token')
         self.quiet = quiet
+        self.separator = separator
 
     def print_message(self, msg):
         if not self.quiet:
@@ -140,7 +141,7 @@ class Gist(object):
             if os.path.isdir(src):
                 logger.debug('Skipping %s, directory', src)
                 continue
-            parts = src.split('___')
+            parts = src.split(self.separator)
             path, filename = '/'.join(parts[:-1]), parts[-1]
             if path:
                 if not os.path.exists(path):
@@ -197,7 +198,7 @@ class Gist(object):
             for base_filename in filenames:
                 file_path = os.path.join(dirpath, base_filename)
                 filename = os.path.relpath(file_path, '.')
-                flattened = filename.replace('/', '___')
+                flattened = filename.replace('/', self.separator)
                 if filename != flattened:
                     logger.info('Renaming %s -> %s' % (filename, flattened))
                     os.rename(filename, flattened)
@@ -275,6 +276,7 @@ def get_option_parser():
     parser.add_option('-q', '--quiet', action='store_true', dest='quiet')
     parser.add_option('-k', '--key', dest='key')
     parser.add_option('-u', '--username', dest='username')
+    parser.add_option('-s', '--separator', dest='separator', default='___')
     return parser
 
 if __name__ == '__main__':
@@ -300,7 +302,8 @@ if __name__ == '__main__':
     gist = Gist(
         username=options.username, 
         key=options.key, 
-        quiet=options.quiet)
+        quiet=options.quiet,
+        separator=options.separator or '___')
 
     method = getattr(gist, command, None)
     if not callable(method):
